@@ -183,20 +183,22 @@ export default function AdminPanel({ onLogout }) {
           <table className="data-table">
             <thead>
               <tr>
-                <th>No</th>
-                <th>Nomor BP</th>
+                <th style={{width:'40px'}}>No</th>
+                <th style={{width:'100px'}}>Nomor BP</th>
                 <th>Nama</th>
-                <th>Total Skor</th>
+                <th style={{width:'90px'}}>Skor</th>
                 <th>Bidang Seni</th>
                 <th>Posisi Diminati</th>
-                <th>Tanggal</th>
-                <th>Aksi</th>
+                <th style={{width:'130px'}}>Tanggal</th>
+                <th style={{width:'110px'}}>Aksi</th>
               </tr>
             </thead>
             <tbody>
               {filtered.map((r, i) => {
                 const score = totalScore(r.scores);
                 const pct = Math.round((score / 50) * 100);
+                const bidang = r.bidangSeni || [];
+                const posisi = r.posisiOrganisasi || [];
                 return (
                   <tr key={r.id}>
                     <td className="td-center">{i + 1}</td>
@@ -212,20 +214,20 @@ export default function AdminPanel({ onLogout }) {
                         </div>
                       </div>
                     </td>
-                    <td className="td-tags">
-                      {(r.bidangSeni || []).slice(0, 2).map(b => (
-                        <span key={b} className="tag">{b}</span>
+                    <td className="td-tags-inline">
+                      {bidang.slice(0, 1).map(b => (
+                        <span key={b} className="tag tag-truncate">{b}</span>
                       ))}
-                      {(r.bidangSeni || []).length > 2 && (
-                        <span className="tag tag-more">+{r.bidangSeni.length - 2}</span>
+                      {bidang.length > 1 && (
+                        <span className="tag tag-more">+{bidang.length - 1}</span>
                       )}
                     </td>
-                    <td className="td-tags">
-                      {(r.posisiOrganisasi || []).slice(0, 2).map(p => (
-                        <span key={p} className="tag tag-pos">{p}</span>
+                    <td className="td-tags-inline">
+                      {posisi.slice(0, 1).map(p => (
+                        <span key={p} className="tag tag-pos tag-truncate">{p}</span>
                       ))}
-                      {(r.posisiOrganisasi || []).length > 2 && (
-                        <span className="tag tag-more">+{r.posisiOrganisasi.length - 2}</span>
+                      {posisi.length > 1 && (
+                        <span className="tag tag-more">+{posisi.length - 1}</span>
                       )}
                     </td>
                     <td className="td-date">{formatDate(r.createdAt)}</td>
